@@ -1,0 +1,11 @@
+{
+  "name": "nest-prisma-gql-next",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/kolife01/nest-prisma-gql-next.git",
+  "author": "Kohei Tanaka <kohei69@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/cli": "^9.1.5"
+  }
+}
