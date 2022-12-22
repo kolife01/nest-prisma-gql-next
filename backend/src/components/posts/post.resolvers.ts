@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { PostModel } from './interfaces/post.model';
 
 @Resolver((of) => PostModel)
