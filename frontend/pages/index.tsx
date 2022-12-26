@@ -2,10 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
+import { GetServerSideProps, NextPage } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+type Props = {
+  title: string;
+};
+
+const Home: NextPage<Props> = (props) => {
   return (
     <>
       <Head>
@@ -16,6 +21,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
+          <h1 className={styles.title}>{props.title}</h1>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.tsx</code>
@@ -121,3 +127,13 @@ export default function Home() {
     </>
   )
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  return {
+    props: {
+      title: "Hello, GraphQL!",
+    },
+  };
+};
+
+export default Home
