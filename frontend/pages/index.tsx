@@ -3,11 +3,15 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { GetServerSideProps, NextPage } from 'next'
+import { urqlClient } from '../src/libs/gql-requests'
 
 const inter = Inter({ subsets: ['latin'] })
 
 type Props = {
-  title: string;
+  posts: {
+    id: string;
+    title: string;
+  }[]
 };
 
 const Home: NextPage<Props> = (props) => {
@@ -21,7 +25,14 @@ const Home: NextPage<Props> = (props) => {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <h1 className={styles.title}>{props.title}</h1>
+          <h1 className={styles.title}>Hello, GraphQ</h1>
+          <ul className={styles.grid}>
+            {props.posts.map((post) => (
+              <li className={styles.title} key={post.id}>
+                id: {post.id} title: {post.title}
+              </li>
+            ))}
+          </ul>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.tsx</code>
@@ -129,11 +140,31 @@ const Home: NextPage<Props> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  return {
-    props: {
-      title: "Hello, GraphQL!",
-    },
-  };
+  try {
+    const client = await urqlClient();
+
+    // 変数なしでGraphQL呼び出し
+    const postsQuery = `
+      query {
+        posts {
+          id
+          title
+        }
+      }
+    `;
+    const result = await client.query(postsQuery, {}).toPromise();
+
+    return {
+      props: {
+        posts: result.data.posts,
+      },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      notFound: true,
+    };
+ }
 };
 
 export default Home
