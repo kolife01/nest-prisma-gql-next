@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -12,6 +13,9 @@ import * as path from 'path';
       sortSchema: true,
     }),
     PostsModule,
+    ConfigModule.forRoot({
+      envFilePath: ['.env.development.local'],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
