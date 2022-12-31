@@ -10,4 +10,5 @@ type PostModel {
 type Query {
   helloEnv: String!
   posts: [PostModel!]
+  prismaPosts: [PostModel!]
 }
