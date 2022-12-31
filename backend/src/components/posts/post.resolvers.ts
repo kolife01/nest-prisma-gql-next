@@ -1,6 +1,6 @@
 import { Query, Resolver } from '@nestjs/graphql';
 import { PostModel } from './interfaces/post.model';
-import { PbEnv } from '../../config//environments/pb-env.service';
+import { PbEnv } from '@pd-config/environments/pb-env.service';
 
 @Resolver(() => PostModel)
 export class PostsResolver {
