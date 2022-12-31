@@ -1,10 +1,10 @@
 import { Query, Resolver } from '@nestjs/graphql';
 import { PostModel } from './interfaces/post.model';
+import { PbEnv } from '../../config//environments/pb-env.service';
 
-@Resolver((of) => PostModel)
+@Resolver(() => PostModel)
 export class PostsResolver {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  constructor(private pbEnv: PbEnv) {}
 
   @Query(() => [PostModel], { name: 'posts', nullable: true })
   async getPosts() {
@@ -18,5 +18,9 @@ export class PostsResolver {
         title: 'GraphQL is so good.',
       },
     ];
+  }
+  @Query(() => String)
+  helloEnv(): string {
+    return this.pbEnv.DatabaseUrl;
   }
 }

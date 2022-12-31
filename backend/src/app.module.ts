@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { PostsModule } from './components/posts/posts.module';
 import * as path from 'path';
-import { validate } from './config/environments/env-validator';
+import { PbEnvModule } from './config/environments/pb-env.module';
 
 @Module({
   imports: [
@@ -14,10 +13,7 @@ import { validate } from './config/environments/env-validator';
       sortSchema: true,
     }),
     PostsModule,
-    ConfigModule.forRoot({
-      envFilePath: ['.env.development.local'],
-      validate,
-    }),
+    PbEnvModule,
   ],
   controllers: [AppController],
   providers: [AppService],
