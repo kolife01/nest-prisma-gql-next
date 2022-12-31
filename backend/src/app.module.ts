@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { PostsModule } from './components/posts/posts.module';
 import * as path from 'path';
+import { validate } from './config/environments/env-validator';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import * as path from 'path';
     PostsModule,
     ConfigModule.forRoot({
       envFilePath: ['.env.development.local'],
+      validate,
     }),
   ],
   controllers: [AppController],
