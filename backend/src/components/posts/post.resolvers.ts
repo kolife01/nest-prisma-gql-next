@@ -7,8 +7,8 @@ import { PrismaService } from '@pd-components/prisma/prisma.service';
 export class PostsResolver {
   constructor(private pbEnv: PbEnv, private readonly prisma: PrismaService) {}
 
-  @Query(() => [PostModel], { name: 'posts', nullable: true })
-  async getPosts() {
+  @Query(() => [PostModel], { name: 'fixedPosts', nullable: true })
+  async getPostsByFixedPosts() {
     return [
       {
         id: '1',
@@ -28,5 +28,14 @@ export class PostsResolver {
   @Query(() => [PostModel], { name: 'prismaPosts', nullable: true })
   async getPostsByPrisma() {
     return this.prisma.post.findMany();
+  }
+
+  @Query(() => [PostModel], { name: 'posts', nullable: true })
+  async getPosts() {
+    return this.prisma.post.findMany({
+      orderBy: {
+        publishDate: 'desc',
+      },
+    });
   }
 }
