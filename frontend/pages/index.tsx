@@ -4,6 +4,7 @@ import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { GetServerSideProps, NextPage } from 'next'
 import { urqlClient } from '../src/libs/gql-requests'
+import { PostIndexPageDocument } from '../src/graphql/generated.graphql'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -143,16 +144,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   try {
     const client = await urqlClient();
 
-    // 変数なしでGraphQL呼び出し
-    const postsQuery = `
-      query {
-        posts {
-          id
-          title
-        }
-      }
-    `;
-    const result = await client.query(postsQuery, {}).toPromise();
+    const result = await client.query(PostIndexPageDocument, {}).toPromise();
 
     return {
       props: {
