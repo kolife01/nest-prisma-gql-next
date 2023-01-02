@@ -22,6 +22,6 @@ type PostModel {
 type Query {
   fixedPosts: [PostModel!]
   helloEnv: String!
-  posts: [PostModel!]
+  posts(type: [String!]): [PostModel!]
   prismaPosts: [PostModel!]
 }

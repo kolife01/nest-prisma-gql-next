@@ -1,7 +1,8 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { PostModel } from './interfaces/post.model';
 import { PbEnv } from '@pd-config/environments/pb-env.service';
 import { PrismaService } from '@pd-components/prisma/prisma.service';
+import { GetPostsArgs } from './interfaces/get-posts-connection.args';
 
 @Resolver(() => PostModel)
 export class PostsResolver {
@@ -31,8 +32,12 @@ export class PostsResolver {
   }
 
   @Query(() => [PostModel], { name: 'posts', nullable: true })
-  async getPosts() {
+  async getPosts(@Args() args: GetPostsArgs) {
     return this.prisma.post.findMany({
+      where: {
+        type: args.type ? { in: args.type } : undefined,
+        published: true,
+      },
       orderBy: {
         publishDate: 'desc',
       },
