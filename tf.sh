@@ -3,6 +3,7 @@
 command=${@:1}
 
 docker run -it --rm \
+  --platform linux/amd64 \
   -v $PWD:/work \
   -v $HOME/.config/gcloud:/.config/gcloud \
   -w /work \
