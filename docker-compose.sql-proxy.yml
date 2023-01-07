@@ -1,6 +1,6 @@
 version: "3"
 
-# Cloud SQL 環境のDBにアクセスするプロキシ
+# Cloud SQL 環境のDBにアクセスするプロキシ テスト
 services:
   blog-training-db-cloud-sql:
     image: "gcr.io/cloudsql-docker/gce-proxy:latest"
